@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Theme Name: Nathalie Mota
 Theme URI: https://www.nathaliemota.fr
@@ -8,3 +9,74 @@ Version: 1.0
 Tags: nathaliemota, photographie, événements, mariage, anniversaire, réception, concert
 Text Domain: nathaliemota
 */
+/*****************************************************/
+/* Import du style personnalisé pour le Thème Enfant */
+/*****************************************************/
+/* Enregistrement des couleurs de la charte graphique */
+:root {
+  --rouge-vif: #e00000;
+  --rouge-moyen: #fe5858;
+  --rose: #ffd6d6;
+  --noir: #000;
+  --bleu-fonce: #313144;
+  --gris-fonce: #c4c4c4;
+  --gris-moyen: #d8d8d8;
+  --gris-clair: #e5e5e5;
+  --blanc: #fff;
+}
+
+/*************************************************************/
+/* Chargement des polices en local depuis le dossier "fonts" */
+/*************************************************************/
+/* SpaceMono */
+@font-face {
+  font-family: "SpaceMono";
+  font-style: normal;
+  font-weight: 400; /* Normal */
+  src: local("SpaceMono Regular"), local("SpaceMono-Regular"), url("assets/fonts/Space_Mono/SpaceMono-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "SpaceMono";
+  font-style: italic;
+  font-weight: 400; /* Italic */
+  src: local("SpaceMono Italic"), local("SpaceMono-Italic"), url("assets/fonts/Space_Mono/SpaceMono-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "SpaceMono";
+  font-style: italic;
+  font-weight: 700; /* Italic Gras */
+  src: local("SpaceMono BoldItalic"), local("SpaceMono-BoldItalic"), url("assets/fonts/Space_Mono/SpaceMono-BoldItalic.woff2") format("woff2");
+}
+/* Poppins */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300; /* Light */
+  src: local("Poppins Light"), local("Poppins-Light"), url("assets/fonts/Poppins/Poppins-Light.woff2") format("woff2");
+}
+/**********************************************************/
+/* Création de classes de base pour appliquer les polices */
+/**********************************************************/
+.spacemono-regular {
+  font-family: "SpaceMono";
+  font-weight: 400;
+  font-style: normal;
+}
+
+.spacemono-italic {
+  font-family: "SpaceMono";
+  font-weight: 400;
+  font-style: italic;
+}
+
+.spacemono-italic-gras {
+  font-family: "SpaceMono";
+  font-weight: 700;
+  font-style: italic;
+}
+
+.poppins-light {
+  font-family: "Poppins";
+  font-weight: 300;
+  font-style: normal;
+}/*# sourceMappingURL=style.css.map */
