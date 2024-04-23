@@ -15,5 +15,8 @@ Text Domain: nathaliemota
 /* Import du style personnalisé pour le Thème Enfant */
 /*****************************************************/
 
-@import "theme.scss";
+@import "normalize.scss";
 @import "typographies";
+@import "couleurs.scss";
+@import "mobile";
+@import "desktop";

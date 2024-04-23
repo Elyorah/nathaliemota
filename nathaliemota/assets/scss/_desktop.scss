@@ -1,0 +1,58 @@
+@media screen and (min-width: 1024px) {
+  /**********/
+  /* HEADER */
+  /**********/
+
+  .nmota__header {
+    height: 80px;
+
+    &__navigation {
+      justify-content: space-between;
+
+      > a {
+        width: 216px;
+        height: 14px;
+        margin-left: 10.25%;
+      }
+
+      &--button {
+        display: none;
+      }
+
+      &--menu {
+        background-color: transparent;
+        width: auto;
+        height: 24px;
+        margin-right: 10.25%;
+        flex-direction: row;
+        position: relative;
+        top: 0;
+        left: 0;
+        gap: 45px;
+        opacity: 1;
+
+        li {
+          a {
+            color: $noir;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  /**********/
+  /* FOOTER */
+  /**********/
+
+  .nmota__footer {
+    height: 40px;
+
+    &__navigation {
+      .nmota__footer__menu {
+        flex-direction: row;
+        gap: 86px;
+      }
+    }
+  }
+}

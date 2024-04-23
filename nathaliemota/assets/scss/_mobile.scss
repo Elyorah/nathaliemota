@@ -1,0 +1,158 @@
+/**********/
+/* HEADER */
+/**********/
+
+#wpadminbar {
+  /* On fixe la barre d'administration en haut de l'écran */
+  position: absolute;
+}
+
+/* On met en gras le lien correspondant à la page en cours */
+li.current-menu-item > a,
+li.current_page_item > a {
+  font-weight: 700;
+}
+
+.nmota__header {
+  background-color: $blanc;
+  width: 100%;
+  height: 72px;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.09);
+
+  &__navigation {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    > a {
+      width: 138px;
+      height: 9px;
+      margin-left: 11%;
+      display: flex;
+    }
+
+    &--logo {
+      width: 100%;
+    }
+
+    &--button {
+      width: 1.7em;
+      height: 19px;
+      padding: 0;
+      background-color: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: absolute;
+      right: 11.25%;
+
+      &::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-image: url("../nathaliemota/assets/images/burger-menu-ouvrir.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover::after {
+        /* Léger zoom sur le bouton pendant le survol */
+        transform: scale(0.7);
+      }
+    }
+
+    /* burger-menu */
+
+    &--menu {
+      background-color: $rouge-vif;
+      width: 100%;
+      height: 812px;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: 72px;
+      left: 100vw;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      opacity: 0;
+      transition-duration: 0.4s;
+
+      li a {
+        color: $blanc;
+        font-size: 44px;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        &:hover {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+
+/* Affichage du burger-menu */
+
+.toggled {
+  .nmota__header__navigation {
+    &--button::after {
+      background-image: url("../nathaliemota/assets/images/burger-menu-fermer.svg") !important;
+    }
+
+    &--menu {
+      left: 0;
+      opacity: 1;
+      transition-duration: 0.4s;
+    }
+  }
+}
+
+/**********/
+/* FOOTER */
+/**********/
+
+.nmota__footer {
+  width: 100%;
+  height: 208px;
+  border-top: 1px solid $noir;
+
+  &__navigation {
+    width: 100%;
+    height: 100%;
+
+    .nmota__footer__menu {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+
+      li a {
+        color: $noir;
+        font-size: 16px;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        &:hover {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

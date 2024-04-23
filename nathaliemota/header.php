@@ -11,16 +11,20 @@
     
   <?php wp_body_open(); ?>
 
-  <header class="nmota__header">
-    <a href="<?php echo home_url( '/' ); ?>">
-      <img class="#" src="<?php echo get_template_directory_uri(); ?> /assets/images/logo.svg" alt="logo du site"/>
-    </a>
-    <nav role="navigation" aria-label="<?php _e('principal', 'text-domain'); ?>" id="nmota__header__navigation">
-      <?php wp_nav_menu( array( 
+  <header class="nmota__header spacemono-regular">
+
+    <nav role="navigation" aria-label="<?php _e('principal', 'text-domain'); ?>" id="nmota__header__navigation" class="nmota__header__navigation">
+      <a href="<?php echo home_url( '/' ); ?>">
+        <img class="nmota__header__navigation--logo" src="<?php echo get_template_directory_uri(); ?> /assets/images/logo.svg" alt="logo du site"/>
+      </a>
+      <button type="button" aria-expanded="false" aria-controls="nmota__header__menu" class="nmota__header__navigation--button">
+      </button>
+      <?php wp_nav_menu( array(
         'theme_location' => 'main-menu',
         'container' => 'ul',
-        'menu_class' => 'nmota__header__menu',
-        'menu_id' => 'nmota__header__menu'
+        'menu_class' => 'nmota__header__navigation--menu',
+        'menu_id' => 'nmota__header__navigation--menu'
       ) ); ?>
     </nav>
+
   </header>
