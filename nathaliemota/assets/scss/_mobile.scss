@@ -64,7 +64,7 @@ li.current_page_item > a {
 
       &:hover::after {
         /* Léger zoom sur le bouton pendant le survol */
-        transform: scale(0.7);
+        transform: scale(1.3);
       }
     }
 
@@ -88,7 +88,8 @@ li.current_page_item > a {
       opacity: 0;
       transition-duration: 0.4s;
 
-      li a {
+      li a,
+      li button {
         color: $blanc;
         font-size: 44px;
         text-transform: uppercase;
@@ -118,6 +119,159 @@ li.current_page_item > a {
   }
 }
 
+/*********************/
+/* MODALE DE CONTACT */
+/*********************/
+
+#contact__button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.contact__content {
+  background-color: $blanc;
+  width: 79%;
+  min-width: 286px;
+  max-width: 400px;
+  height: 583px;
+  border: 3px solid $noir;
+  display: none;
+  position: fixed;
+  z-index: 3;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+
+  @media screen and (min-width: 782px) and (max-width: 1023px) {
+    max-width: 500px;
+    height: 675px;
+  }
+
+  &::before {
+    content: "";
+    width: 160%;
+    height: 55px;
+    margin: 18px 0 14px;
+    display: block;
+    background-image: url("../nathaliemota/assets/images/contact-banner.png");
+    background-size: contain;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    @media screen and (min-width: 782px) and (max-width: 1023px) {
+      width: 140%;
+      height: 82px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+#contact-background {
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+}
+
+.contact-opened {
+  .contact__content {
+    display: block;
+  }
+
+  #contact-background {
+    display: block;
+  }
+}
+
+/* Formulaire de contact */
+
+.wpcf7 {
+  height: 85%;
+
+  & > * {
+    height: 100%;
+  }
+}
+
+.nmota-contact-form {
+  width: 190px;
+  margin: auto;
+  font-size: 12px;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: 782px) and (max-width: 1023px) {
+    width: 220px;
+  }
+
+  & * {
+    width: 100%; /* Appliquer la largeur à 100% à tous les enfants */
+    box-sizing: border-box; /* Assurer que la largeur inclut la marge et le padding */
+  }
+
+  & p {
+    height: auto;
+    margin: 0;
+    padding-bottom: 14px;
+    display: flex;
+    align-items: center;
+
+    @media screen and (min-width: 782px) and (max-width: 1023px) {
+      padding-bottom: 19px;
+    }
+
+    & input,
+    & textarea {
+      border: 1px solid #b8bbc2;
+      border-radius: 8px;
+      margin-top: 5px;
+    }
+
+    & input {
+      height: 40px;
+    }
+
+    & textarea {
+      height: 149px;
+
+      @media screen and (min-width: 782px) and (max-width: 1023px) {
+        height: 180px;
+      }
+    }
+
+    & .wpcf7-submit {
+      background-color: $gris-moyen;
+      height: 50px;
+      padding: 8px 15px;
+      margin-bottom: 24px;
+      font-family: "SpaceMono";
+      font-weight: 400;
+      border: none;
+      border-radius: 2px;
+      box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+      cursor: pointer;
+      transition: 0.4s ease;
+
+      &:hover {
+        background-color: $noir;
+        color: $blanc;
+      }
+    }
+  }
+}
+
+.wpcf7-spinner {
+  display: none;
+}
+
 /**********/
 /* FOOTER */
 /**********/
@@ -143,13 +297,17 @@ li.current_page_item > a {
       align-items: center;
       gap: 24px;
 
-      li a {
-        color: $noir;
-        font-size: 16px;
-        text-transform: uppercase;
-        text-decoration: none;
+      li {
+        a,
+        p {
+          color: $noir;
+          font-size: 16px;
+          margin: 0;
+          text-transform: uppercase;
+          text-decoration: none;
+        }
 
-        &:hover {
+        a:hover {
           font-weight: 700;
         }
       }

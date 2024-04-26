@@ -8,6 +8,7 @@ function theme_enqueue_styles() {
   // Chargement des scripts JS
 
   wp_enqueue_script('burger-menu-script', get_stylesheet_directory_uri() . '/assets/js/burger-menu-script.js', array(), '1.0', true);
+  wp_enqueue_script('custom-scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array(), '1.0', true);
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 
@@ -25,3 +26,32 @@ function register_nmota_menus() {
 }
 add_action( 'after_setup_theme', 'register_nmota_menus' );
 
+// Ajout de la mention "Tous droits réservés" en hook du menu footer
+
+function paragraphe_copyright ( $items, $args ) {
+	if ( isset( $args->theme_location ) && $args->theme_location === 'footer-menu' ) { //On vérifie qu'on est dans le menu footer
+    $items .= '<li><p>Tous droits réservés</p></li>';
+  }
+
+	return $items;
+}
+
+add_filter( 'wp_nav_menu_items', 'paragraphe_copyright', 11, 2 );
+
+// TEST
+
+function modale_contact ( $items, $args ) {
+	if ( isset( $args->theme_location ) && $args->theme_location === 'main-menu' ) {//On vérifie qu'on est dans le menu header
+    
+    ob_start(); // Commence à mettre en tampon la sortie
+    get_template_part( 'templates_part/contact' );
+    $modale_content = ob_get_clean(); // Récupère le contenu mis en tampon et arrête le tampon
+
+    // Ajoute le contenu de la modale dans un élément de menu
+    $items .= '<li>' . $modale_content . '</li>';
+  }
+
+	return $items;
+}
+
+add_filter( 'wp_nav_menu_items', 'modale_contact', 10, 2 );

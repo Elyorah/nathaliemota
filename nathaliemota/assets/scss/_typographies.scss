@@ -38,6 +38,15 @@
     url("assets/fonts/Poppins/Poppins-Light.woff2") format("woff2");
 }
 
+@font-face {
+  /* Utilisée dans le formulaire de contact */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500; /* Medium */
+  src: local("Poppins Medium"), local("Poppins-Medium"),
+    url("assets/fonts/Poppins/Poppins-Medium.woff2") format("woff2");
+}
+
 /**********************************************************/
 /* Création de classes de base pour appliquer les polices */
 /**********************************************************/
@@ -63,5 +72,11 @@
 .poppins-light {
   font-family: "Poppins";
   font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins";
+  font-weight: 500;
   font-style: normal;
 }

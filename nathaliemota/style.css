@@ -351,6 +351,13 @@ template {
   font-weight: 300; /* Light */
   src: local("Poppins Light"), local("Poppins-Light"), url("assets/fonts/Poppins/Poppins-Light.woff2") format("woff2");
 }
+@font-face {
+  /* Utilisée dans le formulaire de contact */
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500; /* Medium */
+  src: local("Poppins Medium"), local("Poppins-Medium"), url("assets/fonts/Poppins/Poppins-Medium.woff2") format("woff2");
+}
 /**********************************************************/
 /* Création de classes de base pour appliquer les polices */
 /**********************************************************/
@@ -375,6 +382,12 @@ template {
 .poppins-light {
   font-family: "Poppins";
   font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins";
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -442,7 +455,7 @@ li.current_page_item > a {
 }
 .nmota__header__navigation--button:hover::after {
   /* Léger zoom sur le bouton pendant le survol */
-  transform: scale(0.7);
+  transform: scale(1.3);
 }
 .nmota__header__navigation--menu {
   background-color: #e00000;
@@ -462,13 +475,15 @@ li.current_page_item > a {
   opacity: 0;
   transition-duration: 0.4s;
 }
-.nmota__header__navigation--menu li a {
+.nmota__header__navigation--menu li a,
+.nmota__header__navigation--menu li button {
   color: #fff;
   font-size: 44px;
   text-transform: uppercase;
   text-decoration: none;
 }
-.nmota__header__navigation--menu li a:hover {
+.nmota__header__navigation--menu li a:hover,
+.nmota__header__navigation--menu li button:hover {
   font-weight: 700;
 }
 
@@ -480,6 +495,149 @@ li.current_page_item > a {
   left: 0;
   opacity: 1;
   transition-duration: 0.4s;
+}
+
+/*********************/
+/* MODALE DE CONTACT */
+/*********************/
+#contact__button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.contact__content {
+  background-color: #fff;
+  width: 79%;
+  min-width: 286px;
+  max-width: 400px;
+  height: 583px;
+  border: 3px solid #000;
+  display: none;
+  position: fixed;
+  z-index: 3;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+@media screen and (min-width: 782px) and (max-width: 1023px) {
+  .contact__content {
+    max-width: 500px;
+    height: 675px;
+  }
+}
+.contact__content::before {
+  content: "";
+  width: 160%;
+  height: 55px;
+  margin: 18px 0 14px;
+  display: block;
+  background-image: url("../nathaliemota/assets/images/contact-banner.png");
+  background-size: contain;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media screen and (min-width: 782px) and (max-width: 1023px) {
+  .contact__content::before {
+    width: 140%;
+    height: 82px;
+    margin-bottom: 30px;
+  }
+}
+
+#contact-background {
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+}
+
+.contact-opened .contact__content {
+  display: block;
+}
+.contact-opened #contact-background {
+  display: block;
+}
+
+/* Formulaire de contact */
+.wpcf7 {
+  height: 85%;
+}
+.wpcf7 > * {
+  height: 100%;
+}
+
+.nmota-contact-form {
+  width: 190px;
+  margin: auto;
+  font-size: 12px;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 782px) and (max-width: 1023px) {
+  .nmota-contact-form {
+    width: 220px;
+  }
+}
+.nmota-contact-form * {
+  width: 100%; /* Appliquer la largeur à 100% à tous les enfants */
+  box-sizing: border-box; /* Assurer que la largeur inclut la marge et le padding */
+}
+.nmota-contact-form p {
+  height: auto;
+  margin: 0;
+  padding-bottom: 14px;
+  display: flex;
+  align-items: center;
+}
+@media screen and (min-width: 782px) and (max-width: 1023px) {
+  .nmota-contact-form p {
+    padding-bottom: 19px;
+  }
+}
+.nmota-contact-form p input, .nmota-contact-form p textarea {
+  border: 1px solid #b8bbc2;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+.nmota-contact-form p input {
+  height: 40px;
+}
+.nmota-contact-form p textarea {
+  height: 149px;
+}
+@media screen and (min-width: 782px) and (max-width: 1023px) {
+  .nmota-contact-form p textarea {
+    height: 180px;
+  }
+}
+.nmota-contact-form p .wpcf7-submit {
+  background-color: #d8d8d8;
+  height: 50px;
+  padding: 8px 15px;
+  margin-bottom: 24px;
+  font-family: "SpaceMono";
+  font-weight: 400;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  transition: 0.4s ease;
+}
+.nmota-contact-form p .wpcf7-submit:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.wpcf7-spinner {
+  display: none;
 }
 
 /**********/
@@ -506,9 +664,11 @@ li.current_page_item > a {
   align-items: center;
   gap: 24px;
 }
-.nmota__footer__navigation .nmota__footer__menu li a {
+.nmota__footer__navigation .nmota__footer__menu li a,
+.nmota__footer__navigation .nmota__footer__menu li p {
   color: #000;
   font-size: 16px;
+  margin: 0;
   text-transform: uppercase;
   text-decoration: none;
 }
@@ -517,6 +677,10 @@ li.current_page_item > a {
 }
 
 @media screen and (min-width: 1024px) {
+  body {
+    max-width: 1440px;
+    margin: auto;
+  }
   /**********/
   /* HEADER */
   /**********/
@@ -546,9 +710,38 @@ li.current_page_item > a {
     gap: 45px;
     opacity: 1;
   }
-  .nmota__header__navigation--menu li a {
+  .nmota__header__navigation--menu li a,
+  .nmota__header__navigation--menu li button {
     color: #000;
     font-size: 16px;
+  }
+  /*********************/
+  /* MODALE DE CONTACT */
+  /*********************/
+  .contact__content {
+    width: 600px;
+    height: 769px;
+    max-width: 600px;
+    border: 5px solid #000;
+  }
+  .contact__content::before {
+    width: 145%;
+    height: 106px;
+    margin-bottom: 46px;
+    background-size: cover;
+  }
+  /* Formulaire de contact */
+  .nmota-contact-form {
+    width: 263px;
+  }
+  .nmota-contact-form p {
+    padding-bottom: 24px;
+  }
+  .nmota-contact-form p:has(textarea) {
+    padding-bottom: 19px;
+  }
+  .nmota-contact-form p textarea {
+    height: 210px;
   }
   /**********/
   /* FOOTER */

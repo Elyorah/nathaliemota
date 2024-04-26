@@ -1,4 +1,9 @@
 @media screen and (min-width: 1024px) {
+  body {
+    max-width: 1440px;
+    margin: auto;
+  }
+
   /**********/
   /* HEADER */
   /**********/
@@ -31,12 +36,47 @@
         gap: 45px;
         opacity: 1;
 
-        li {
-          a {
-            color: $noir;
-            font-size: 16px;
-          }
+        li a,
+        li button {
+          color: $noir;
+          font-size: 16px;
         }
+      }
+    }
+  }
+
+  /*********************/
+  /* MODALE DE CONTACT */
+  /*********************/
+
+  .contact__content {
+    width: 600px;
+    height: 769px;
+    max-width: 600px;
+    border: 5px solid $noir;
+
+    &::before {
+      width: 145%;
+      height: 106px;
+      margin-bottom: 46px;
+      background-size: cover;
+    }
+  }
+
+  /* Formulaire de contact */
+
+  .nmota-contact-form {
+    width: 263px;
+
+    & p {
+      padding-bottom: 24px;
+
+      &:has(textarea) {
+        padding-bottom: 19px;
+      }
+
+      & textarea {
+        height: 210px;
       }
     }
   }
