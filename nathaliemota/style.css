@@ -352,7 +352,7 @@ template {
   src: local("Poppins Light"), local("Poppins-Light"), url("assets/fonts/Poppins/Poppins-Light.woff2") format("woff2");
 }
 @font-face {
-  /* Utilisée dans le formulaire de contact */
+  /* Utilisée dans le formulaire de contact et les filtres */
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500; /* Medium */
@@ -533,7 +533,7 @@ li.current_page_item > a {
   height: 55px;
   margin: 18px 0 14px;
   display: block;
-  background-image: url("../nathaliemota/assets/images/contact-banner.png");
+  background-image: url("../nathaliemota/assets/images/contact-banner.png.webp");
   background-size: contain;
   position: relative;
   left: 50%;
