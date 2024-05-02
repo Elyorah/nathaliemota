@@ -392,6 +392,27 @@ template {
 }
 
 /* Enregistrement des couleurs de la charte graphique */
+/* Global */
+.default-button {
+  background-color: #d8d8d8;
+  font-size: 12px;
+  height: 50px !important;
+  padding: 8px 15px;
+  border: none !important;
+  border-radius: 2px !important;
+  box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  transition: 0.4s ease;
+}
+.default-button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
 /**********/
 /* HEADER */
 /**********/
@@ -460,19 +481,19 @@ li.current_page_item > a {
 .nmota__header__navigation--menu {
   background-color: #e00000;
   width: 100%;
-  height: 812px;
+  height: 100vh;
   margin: 0;
   padding: 0;
   position: absolute;
   top: 72px;
   left: 100vw;
+  z-index: 100;
   list-style: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 18px;
-  opacity: 0;
   transition-duration: 0.4s;
 }
 .nmota__header__navigation--menu li a,
@@ -493,8 +514,6 @@ li.current_page_item > a {
 }
 .toggled .nmota__header__navigation--menu {
   left: 0;
-  opacity: 1;
-  transition-duration: 0.4s;
 }
 
 /*********************/
@@ -515,7 +534,7 @@ li.current_page_item > a {
   border: 3px solid #000;
   display: none;
   position: fixed;
-  z-index: 3;
+  z-index: 1000;
   top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -554,7 +573,7 @@ li.current_page_item > a {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 500;
   display: none;
 }
 
@@ -619,27 +638,24 @@ li.current_page_item > a {
   }
 }
 .nmota-contact-form p .wpcf7-submit {
-  background-color: #d8d8d8;
-  height: 50px;
-  padding: 8px 15px;
   margin-bottom: 24px;
-  font-family: "SpaceMono";
-  font-weight: 400;
-  border: none;
-  border-radius: 2px;
-  box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
-  cursor: pointer;
-  transition: 0.4s ease;
-}
-.nmota-contact-form p .wpcf7-submit:hover {
-  background-color: #000;
-  color: #fff;
 }
 
 .wpcf7-spinner {
   display: none;
 }
 
+/******************/
+/* ARCHIVE-PHOTOS */
+/******************/
+.archive-photo__title {
+  font-size: 27.6px;
+  text-align: center;
+}
+
+/*****************/
+/* SINGLE-PHOTOS */
+/*****************/
 /**********/
 /* FOOTER */
 /**********/
@@ -742,6 +758,12 @@ li.current_page_item > a {
   }
   .nmota-contact-form p textarea {
     height: 210px;
+  }
+  /******************/
+  /* ARCHIVE-PHOTOS */
+  /******************/
+  .archive-photo__title {
+    font-size: 96px;
   }
   /**********/
   /* FOOTER */

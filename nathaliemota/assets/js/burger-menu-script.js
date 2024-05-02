@@ -21,9 +21,19 @@ document.addEventListener("DOMContentLoaded", function () {
      * - on ajouter/supprime la classe "toggled" sur la <nav> qui nous servira à masquer/afficher en css
      * - on passe l'attribut "aria-expanded" à true/false
      */
+
     if (mobileButton) {
       mobileButton.addEventListener("click", function () {
         siteNavigation.classList.toggle("toggled");
+
+        if (siteNavigation.classList.contains("toggled")) {
+          siteNavigation.classList.remove("overflow-hidden"); // Désactive overflow-hidden
+        } else {
+          // Fermer le menu après une courte pause pour permettre à la transition de se terminer
+          setTimeout(() => {
+            siteNavigation.classList.add("overflow-hidden");
+          }, 400); // Correspond à la durée de la transition CSS
+        }
 
         if (mobileButton.getAttribute("aria-expanded") === "true") {
           setAttr(mobileButton, "aria-expanded", "false");

@@ -13,7 +13,7 @@
 
   <header class="nmota__header spacemono-regular">
 
-    <nav role="navigation" aria-label="<?php _e('principal', 'text-domain'); ?>" id="nmota__header__navigation" class="nmota__header__navigation">
+    <nav role="navigation" aria-label="<?php _e('principal', 'text-domain'); ?>" id="nmota__header__navigation" class="nmota__header__navigation overflow-hidden">
       <a href="<?php echo home_url( '/' ); ?>">
         <img class="nmota__header__navigation--logo" src="<?php echo get_template_directory_uri(); ?> /assets/images/logo.svg" alt="logo du site"/>
       </a>

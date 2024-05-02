@@ -7,8 +7,22 @@ function theme_enqueue_styles() {
 
   // Chargement des scripts JS
 
+  wp_enqueue_script('jquery'); //Charger jQuery en premier
+
   wp_enqueue_script('burger-menu-script', get_stylesheet_directory_uri() . '/assets/js/burger-menu-script.js', array(), '1.0', true);
-  wp_enqueue_script('custom-scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array(), '1.0', true);
+  wp_enqueue_script('custom-scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array('jquery'), '1.0', true);
+
+  
+  $reference = get_field('reference'); // Récupération du champ "Référence" depuis ACF
+
+  // Données à transmettre
+  $reference_value = array(
+    'referenceValue' => $reference
+  );
+
+  // Transmettre les données à votre script JavaScript
+  wp_localize_script('custom-scripts', 'referenceJS', $reference_value);
+
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 
