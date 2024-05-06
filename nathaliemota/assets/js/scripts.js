@@ -27,5 +27,5 @@ jQuery(document).ready(function () {
   }
 
   openModal("#contact__button");
-  openModal("#nmota-photo-post__cta--button");
+  openModal("#nmota-photo-post__cta__main-container--button");
 });

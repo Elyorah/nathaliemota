@@ -36,9 +36,9 @@
 
         <div class="nmota-photo-post__content-description">
 
-          <h1 class="nmota-photo-post__content-description--title"> <?php the_title(); ?> </h1>
+          <h1 class="nmota-photo-post__content-description--title spacemono-italic"> <?php the_title(); ?> </h1>
 
-          <ul class="nmota-photo-post__content-description--list">
+          <ul class="nmota-photo-post__content-description--list spacemono-regular">
 
             <li class="">Référence:
               <?php 
@@ -96,17 +96,41 @@
 
       <div class="nmota-photo-post__cta">
         
-        <p class="nmota-photo-post__cta--intro">Cette photo vous intéresse ?</p>
-        <button id="nmota-photo-post__cta--button" class="spacemono-regular default-button">Contact</button>
+        <div class="nmota-photo-post__cta__main-container">
+          <p class="nmota-photo-post__cta__main-container--intro poppins-light">Cette photo vous intéresse ?</p>
+          <button id="nmota-photo-post__cta__main-container--button" class="spacemono-regular default-button nmota-photo-post__cta__main-container--button">Contact</button>
+        </div>
+        <div class="nmota-photo-post__cta__nav">
 
-        <div class="nmota-photo-post__cta--nav">
-          <img src="" alt="" class="">
-
-          <div class="nmota-photo-post__cta--nav-arrows">
-            <img src="" alt="" class="">
-            <img src="" alt="" class="">
+          <div class="nmota-photo-post__cta__nav__thumbnails">
+            <!-- Navigation entre posts -->
+            <?php
+              $next_post = get_next_post(); // On récupère le post suivant.
+              $prev_post = get_previous_post(); // On récupère le post précédent.
+              // On vérifie si la publication suivante existe et on affiche sa vignette avec un lien vers le post.
+              if ($next_post) {
+                $next_post_thumbnail = get_the_post_thumbnail($next_post->ID, array(81, 71));
+                $next_post_link = get_permalink($next_post->ID);
+                echo '<a href="' . $next_post_link . '"><div id="next-thumbnail">' . $next_post_thumbnail . '</div></a>';
+              }
+              // Idem pour le post précédent, en vérifiant qu'il soit différent du post suivant
+              if ($prev_post && $prev_post !== $next_post) {
+                  $prev_post_thumbnail = get_the_post_thumbnail($prev_post->ID, array(81, 71));
+                  $prev_post_link = get_permalink($prev_post->ID);
+                  echo '<a href="' . $prev_post_link . '"><div id="prev-thumbnail">' . $prev_post_thumbnail . '</div></a>';
+              }
+            ?>
           </div>
-
+          
+          <!-- On ajoute les flèches de navigation -->
+          <div class="nmota-photo-post__cta__nav__arrows">
+            <?php if ($prev_post) : ?>
+                <a href="<?= get_permalink($prev_post->ID) ?>" class="nmota-photo-post__cta__nav__arrows--prev"></a>
+            <?php endif; ?>
+            <?php if ($next_post) : ?>
+                <a href="<?= get_permalink($next_post->ID) ?>" class="nmota-photo-post__cta__nav__arrows--next"></a>
+            <?php endif; ?>
+          </div>
         </div>
 
       </div>
