@@ -140,8 +140,8 @@
         <h2 class="nmota-photo-post__suggestions--title spacemono-regular">Vous aimerez aussi</h2>
 
         <div class="nmota-photo-post__suggestions--photos">
-          <img src="" alt="" class="">
-          <img src="" alt="" class="">
+          <!-- On récupère le template partiel -->
+          <?php get_template_part( 'templates_part/photo_block' ); ?>
         </div>
 
       </div>
