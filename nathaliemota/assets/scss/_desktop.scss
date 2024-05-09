@@ -81,9 +81,11 @@
     }
   }
 
-  /********/
+  /******************/
+  /* ARCHIVE-PHOTOS */
+  /******************/
+
   /* HERO */
-  /********/
 
   .nmota-hero {
     &__thumbnail {
@@ -100,12 +102,33 @@
     }
   }
 
-  /******************/
-  /* ARCHIVE-PHOTOS */
-  /******************/
+  /* FILTRES */
 
-  .archive-photo__title {
-    font-size: 96px;
+  /* LISTE DE PHOTOS */
+
+  .nmota-home-photo-list {
+    width: 80%;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: space-between;
+
+    .photo-block {
+      width: calc(
+        (100% - 20px) / 2
+      ); // Largeur totale du parent - le gap, divisés par 2 pour avoir seulement 2 images par ligne
+    }
+  }
+
+  /*********************************/
+  /* PHOTO-BLOC (TEMPLATE PARTIEL) */
+  /*********************************/
+
+  .photo-block {
+    height: 34.375vw; //          On exprime la hauteur en fonction de la largeur de la page.
+    max-height: 495px; //         (pour 1440px: l = 1440 px -> 100 %
+    padding-bottom: 0; //                       h = 495 px -> ? %    -> ? = (495*100)/1440 -> 34.375 % )
   }
 
   /*****************/
@@ -240,14 +263,6 @@
         flex-direction: row;
         gap: 20px;
         overflow: hidden;
-
-        .related-photo {
-          height: calc(
-            100vw * 34.375 / 100
-          ); ////////////////// On exprime la hauteur en fonction de la largeur de la page.
-          max-height: 495px; // (pour 1440px: l = 1440 px -> 100 %
-          padding-bottom: 0; //               h = 495 px -> ? %    -> ? = (495*100)/1440 -> 34.375 % )
-        }
       }
     }
   }

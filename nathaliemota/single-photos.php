@@ -54,7 +54,7 @@
               <?php
                 if ($categories && !is_wp_error($categories)) {
                   foreach ($categories as $categorie) {
-                      echo $categorie->name ;
+                    echo $categorie->name ;
                   }
                 } else {
                   echo 'Aucune catégorie trouvée pour cette photo.';
@@ -66,7 +66,7 @@
               <?php
                 if ($formats && !is_wp_error($formats)) {
                   foreach ($formats as $format) {
-                      echo $format->name ;
+                    echo $format->name ;
                   }
                 } else {
                   echo 'Aucun format trouvé pour cette photo.';
@@ -115,9 +115,9 @@
               }
               // Idem pour le post précédent, en vérifiant qu'il soit différent du post suivant
               if ($prev_post && $prev_post !== $next_post) {
-                  $prev_post_thumbnail = get_the_post_thumbnail($prev_post->ID, array(81, 71));
-                  $prev_post_link = get_permalink($prev_post->ID);
-                  echo '<a href="' . $prev_post_link . '"><div id="prev-thumbnail">' . $prev_post_thumbnail . '</div></a>';
+                $prev_post_thumbnail = get_the_post_thumbnail($prev_post->ID, array(81, 71));
+                $prev_post_link = get_permalink($prev_post->ID);
+                echo '<a href="' . $prev_post_link . '"><div id="prev-thumbnail">' . $prev_post_thumbnail . '</div></a>';
               }
             ?>
           </div>
@@ -125,10 +125,10 @@
           <!-- On ajoute les flèches de navigation -->
           <div class="nmota-photo-post__cta__nav__arrows">
             <?php if ($prev_post) : ?>
-                <a href="<?= get_permalink($prev_post->ID) ?>" class="nmota-photo-post__cta__nav__arrows--prev"></a>
+              <a href="<?= get_permalink($prev_post->ID) ?>" class="nmota-photo-post__cta__nav__arrows--prev"></a>
             <?php endif; ?>
             <?php if ($next_post) : ?>
-                <a href="<?= get_permalink($next_post->ID) ?>" class="nmota-photo-post__cta__nav__arrows--next"></a>
+              <a href="<?= get_permalink($next_post->ID) ?>" class="nmota-photo-post__cta__nav__arrows--next"></a>
             <?php endif; ?>
           </div>
         </div>
@@ -140,8 +140,47 @@
         <h2 class="nmota-photo-post__suggestions--title spacemono-regular">Vous aimerez aussi</h2>
 
         <div class="nmota-photo-post__suggestions--photos">
-          <!-- On récupère le template partiel -->
-          <?php get_template_part( 'templates_part/photo_block' ); ?>
+
+          <?php
+          
+          // On récupère l'ID du post actuel
+          $current_post_id = get_the_ID();
+
+          // On vérifie si des catégories ont été trouvées
+          if ( $categories && ! is_wp_error( $categories ) ) {
+            // On stocke les IDs des catégories dans un tableau
+            $category_ids = array();
+
+            // On boucle à travers les catégories pour récupérer les IDs
+            foreach ( $categories as $category ) {
+              $category_ids[] = $category->term_id;
+            }
+          }
+
+          // Arguments pour la requête WP_Query
+          $args = array(
+            'post_type' => 'photos',
+            'posts_per_page' => 2,
+            'orderby' => 'rand',
+            'tax_query' => array(
+              array(
+                'taxonomy' => 'categorie',
+                'terms' => $category_ids,
+              ),
+            ),
+          );
+          // Exclure le post actuel de la requête
+          $args['post__not_in'] = array( $current_post_id );
+
+          // Affichage des photos apparentées
+          $related_query = new WP_Query($args);
+
+          if ($related_query->have_posts()) : while ($related_query->have_posts()) : $related_query->the_post();
+            get_template_part( 'templates_part/photo_block' );
+          endwhile; endif;
+
+          wp_reset_postdata(); ?>
+
         </div>
 
       </div>

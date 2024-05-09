@@ -4,7 +4,13 @@
 	Template Post Type: page
 */
 
-get_header(); ?>
+get_header();
+
+/*'.'.'.'.'.*/
+/*   HERO   */
+/*'.'.'.'.'.*/
+
+?>
 
 <div class="nmota-hero">
 
@@ -34,12 +40,48 @@ get_header(); ?>
                     
 		endwhile; endif ;   
 						
-	// On réinitialise à la requête principale
-	wp_reset_postdata(); ?>
+		// On réinitialise à la requête principale
+		wp_reset_postdata();
+	?>
 				
 	<h1 class="nmota-hero__title spacemono-italic-gras"><?php bloginfo('description'); ?></h1>
 
 </div>
 
-		
+<?php
+/*'.'.'.'.'.'.'*/
+/*   FILTRES   */
+/*'.'.'.'.'.'.'*/
+?>
+
+<div class="nmota-filters-container">
+		<h2>VOICI LES FILTRES ! ! ! </h2>
+</div>
+
+<?php
+/*'.'.'.'.'.'.'.'.'.'.'*/
+/*   LISTE DE PHOTOS   */
+/*'.'.'.'.'.'.'.'.'.'.'*/
+?>
+
+<div class="nmota-home-photo-list">
+
+	<?php
+	// Arguments pour la requête WP_Query
+	$args = array(
+		'post_type' => 'photos',
+		'posts_per_page' => 8,
+	);
+
+	// Affichage de la liste de photos
+	$photo_list_query = new WP_Query ($args);
+
+	if ($photo_list_query->have_posts()) : while ($photo_list_query->have_posts()) : $photo_list_query->the_post();
+		get_template_part( 'templates_part/photo_block' );
+	endwhile; endif;
+
+	?>
+
+</div>
+
 <?php get_footer(); ?>

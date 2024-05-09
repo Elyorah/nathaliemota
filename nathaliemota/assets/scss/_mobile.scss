@@ -278,9 +278,11 @@ li.current_page_item > a {
   display: none;
 }
 
-/********/
+/******************/
+/* ARCHIVE-PHOTOS */
+/******************/
+
 /* HERO */
-/********/
 
 .nmota-hero {
   width: 100%;
@@ -300,6 +302,9 @@ li.current_page_item > a {
   }
 
   &__title {
+    color: $blanc; // Couleur de substitution au cas où le text-stroke n'est pas supporté par le navigateur
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.031em $blanc;
     width: 77%;
     font-size: 7.36vw;
     line-height: 41px;
@@ -310,18 +315,55 @@ li.current_page_item > a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
-    @supports (-webkit-text-stroke: 0.031em $blanc) {
-      color: $blanc;
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: 0.031em $blanc;
-    }
   }
 }
 
-/******************/
-/* ARCHIVE-PHOTOS */
-/******************/
+/* FILTRES */
+
+.nmota-filters-container {
+  background-color: $gris-moyen;
+  width: 100%;
+  height: 70px;
+  margin: 28px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    color: $noir;
+    text-align: center;
+  }
+}
+
+/* LISTE DE PHOTOS */
+
+.nmota-home-photo-list {
+  width: 84.8vw;
+  margin: 0 auto 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+/*********************************/
+/* PHOTO-BLOC (TEMPLATE PARTIEL) */
+/*********************************/
+
+.photo-block {
+  position: relative;
+  width: 100%;
+  padding-bottom: calc(
+    279 / 318 * 100%
+  ); // Calcul du rapport hauteur/largeur (279 est la hauteur en px, 318 est la largeur)
+  overflow: hidden;
+
+  & a img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
 
 /*****************/
 /* SINGLE-PHOTOS */
@@ -419,27 +461,10 @@ li.current_page_item > a {
 
     &--photos {
       width: 84.8vw;
-      max-width: 100%;
       margin: 0 0 24px;
       display: flex;
       flex-direction: column;
       gap: 21px;
-
-      .related-photo {
-        position: relative;
-        width: 100%;
-        padding-bottom: calc(
-          279 / 318 * 100%
-        ); // Calcul du rapport hauteur/largeur (279 est la hauteur en px, 318 est la largeur)
-        overflow: hidden;
-
-        & a img {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
     }
   }
 }
