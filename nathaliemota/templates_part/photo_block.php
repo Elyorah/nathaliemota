@@ -37,11 +37,11 @@ $args['post__not_in'] = array( $current_post_id );
 $related_query = new WP_Query( $args );
 
 // Boucle 
-if( $related_query->have_posts() ) : while( $related_query->have_posts() ) : $related_query->the_post(); ?>
+if( $related_query->have_posts() ) : while( $related_query->have_posts() ) : $related_query->the_post();
   
   
 
-  <?php $post_permalink = get_permalink(); ?>
+  $post_permalink = get_permalink(); ?>
 
   <div class="related-photo">
     <a href="<?php echo esc_url( $post_permalink ); ?>">

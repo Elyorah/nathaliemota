@@ -1,42 +1,45 @@
-<?php get_header(); ?>
+<?php 
+/*
+	Template Name: archive-photos
+	Template Post Type: page
+*/
 
- 	<h1 class="spacemono-italic-gras archive-photo__title">PHOTOGRAPHE EVENT</h1>
+get_header(); ?>
 
-	<!-- Boucle WordPress -->
+<div class="nmota-hero">
 
-	<?php if( have_posts() ) : while( have_posts() ) : the_post(); ?>
-  
-		<article class="post">
-			<h2><?php the_title(); ?></h2>
-      
-        	<?php the_post_thumbnail(); ?>
-            
-            <p class="post__meta">
-                Publié le <?php the_time( get_option( 'date_format' ) ); ?> 
-                par <?php the_author(); ?> • <?php comments_number(); ?>
-            </p>
-            
-      		<?php the_excerpt(); ?>
-              
-      		<p>
-						<a href="<?php the_permalink(); ?>" class="post__link">Lire la suite</a>
-					</p>
-		</article>
+	<!-- On récupère aléatoirement 1 post du CPT "Photos" -->
+	<?php
+		$args = array(
+			'post_type' => 'photos',
+			'orderby'   => 'rand',
+			'posts_per_page' => 1,
+		);
 
-	<?php endwhile; endif; ?>
+		// On exécute la requête WP_Query avec les critères placés dans la variables $args
+		$hero_query = new WP_Query( $args );
 
-	<!-- Pagination -->
+		// Boucle 
+		if( $hero_query->have_posts() ) : while( $hero_query->have_posts() ) : $hero_query->the_post();
 
-	<div class="site__navigation">
+			if(has_post_thumbnail()) : ?>
 
-		<div class="site__navigation__prev">
-			<?php previous_posts_link('Page précédente'); ?>
-  	</div>
+				<div class="nmota-hero__thumbnail">
+					<a href="<?php the_permalink(); ?>" alt="<?php the_title(); ?>">
+						<?php the_post_thumbnail(); ?>
+					</a>
+				</div>
+				
+			<?php endif;
+                    
+		endwhile; endif ;   
+						
+	// On réinitialise à la requête principale
+	wp_reset_postdata(); ?>
+				
+	<h1 class="nmota-hero__title spacemono-italic-gras"><?php bloginfo('description'); ?></h1>
 
-  	<div class="site__navigation__next">
-      <?php next_posts_link('Page suivante'); ?> 
-    </div>
+</div>
 
-	</div>
-
+		
 <?php get_footer(); ?>

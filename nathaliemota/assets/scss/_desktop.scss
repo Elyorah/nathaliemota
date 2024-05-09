@@ -81,6 +81,25 @@
     }
   }
 
+  /********/
+  /* HERO */
+  /********/
+
+  .nmota-hero {
+    &__thumbnail {
+      height: calc(100vw * (962 / 1440));
+    }
+
+    &__title {
+      line-height: 142px;
+
+      @media screen and (min-width: 1440px) {
+        width: 70%;
+        font-size: 6em;
+      }
+    }
+  }
+
   /******************/
   /* ARCHIVE-PHOTOS */
   /******************/
