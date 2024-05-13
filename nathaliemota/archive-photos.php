@@ -71,7 +71,10 @@ get_header();
 	$args = array(
 		'post_type' => 'photos',
 		'posts_per_page' => 8,
-	);
+		'orderby' => 'date',
+    'order' => 'DESC',
+    'paged' => 1,
+  );
 
 	// Affichage de la liste de photos
 	$photo_list_query = new WP_Query ($args);
@@ -83,5 +86,7 @@ get_header();
 	?>
 
 </div>
+
+<div class="button-container"><button id="load-more" class="default-button spacemono-regular">Charger plus</button></div>
 
 <?php get_footer(); ?>
