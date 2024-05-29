@@ -3,7 +3,7 @@
 // Chargement du CSS personnalisé
 
 function theme_enqueue_styles() {
-  wp_enqueue_style( 'theme-style', get_stylesheet_directory_uri() . './style.css' );
+  wp_enqueue_style( 'theme-style', get_stylesheet_directory_uri() . '/style.css' );
 
   // Chargement des scripts JS
 
@@ -20,16 +20,17 @@ function theme_enqueue_styles() {
     );
 
     // Transmettre les données à votre script JavaScript
-    wp_localize_script('scripts', 'referenceJS', $reference_value);
+    wp_localize_script('scripts', 'reference_JS', $reference_value);
 
   wp_enqueue_script('display-thumbnails', get_stylesheet_directory_uri() . '/assets/js/display-thumbnails.js', array('jquery'), '1.0', true);
-  wp_enqueue_script('load-more', get_stylesheet_directory_uri() . '/assets/js/load-more.js', array('jquery'), '1.0', true);
-  
-    // Génération du nonce (jeton de sécurité) et ajout dans une variable JavaScript pour utilisation côté client
-    $load_more_nonce = wp_create_nonce('load_more_photos_nonce');
 
-    wp_localize_script('load-more', 'loadMore_js', array('ajax_url' => admin_url('admin-ajax.php'), 'load_more_photos_nonce' => $load_more_nonce));
+  // Filtres en menus personnalisés
+  wp_enqueue_script('lightbox', get_stylesheet_directory_uri() . '/assets/js/lightbox.js', array(), '1.0', true);
 
+  // Ajax pour les filtres de tri des Photos et le bouton "charger plus" pour la pagination
+  wp_enqueue_script('load-more_and_filters_ajax', get_stylesheet_directory_uri() . '/assets/js/load-more_and_filters_ajax.js', array('jquery'), '1.0', true);
+
+    wp_localize_script('load-more_and_filters_ajax', 'loadMore_and_filters_JS', array('ajax_url' => admin_url('admin-ajax.php'),'loadMore_and_filters_nonce' => wp_create_nonce('loadMore_and_filters_nonce')));
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 
@@ -77,61 +78,87 @@ function modale_contact ( $items, $args ) {
 
 add_filter( 'wp_nav_menu_items', 'modale_contact', 10, 2 );
 
-////////////////////////////////////////////////////////////////
-// Chargement de photos supplémentaires sur la page d'accueil //
-////////////////////////////////////////////////////////////////
+/////////////////////////////////////////
+// Tri des Photos de la page d'accueil //
+/////////////////////////////////////////
 
-  function load_more_photos () {
+function loadMore_and_filters_photos() {
+  // Récupérer les paramètres de pagination et des filtres
 
-    // On récupère le numéro de page actuel avec GET 'paged', de manière sécurisée,
-    // en vérifiant que le numéro en question est de type "numérique"; on conserve sa veleur "entière".    
-    $paged = (isset($_POST['paged']) && is_numeric($_POST['paged'])) ? intval($_POST['paged']) : 1;
+  // On récupère le numéro de page actuel de manière sécurisée,
+  // en vérifiant que le numéro en question est de type "numérique"; on conserve sa veleur "entière".
+  $paged = (isset($_POST['paged']) && is_numeric($_POST['paged'])) ? intval($_POST['paged']) : 1;
 
-    // Vérifier et filtrer le nonce (pour prévenir les attaques CSRF)
-    if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'load_more_photos_nonce')) {
-      wp_send_json_error('Vérification de sécurité échouée');
-    }
+  // On récupère de manière sécurisée la catégorie et le format depuis la requête POST
+  $category = isset($_POST['categorie']) ? sanitize_text_field($_POST['categorie']) : '';
+  $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : '';
+  $sort = isset($_POST['sort']) ? sanitize_text_field($_POST['sort']) : 'DESC'; // Tri par défaut : du plus récent au plus ancien
 
-    $load_more_args = array(
-      'post_type' => 'photos',
-      'posts_per_page' => 8,
-      'orderby' => 'date',
-      'order' => 'DESC',
-      'paged' => $paged,
-    );
-
-    $load_more_query = new WP_Query($load_more_args);
-
-    $response = array(
-      'html' => '', // Initialise le contenu HTML
-      'hasMore' => false, // Initialise l'indicateur de photos supplémentaires
-      'success' => false, // Initialise le statut de la requête
-    );
-
-    if ($load_more_query->have_posts()) {
-      ob_start();
-      while ($load_more_query->have_posts()) {
-        $load_more_query->the_post();
-        get_template_part('templates_part/photo_block'); // On va chercher le template partiel.
-      }
-      $response['html'] = ob_get_clean();
-      $response['success'] = true; // La requête a réussi.
-    }
-
-    // On vérifie s'il y a davantage de photos disponibles.
-    $total_posts = $load_more_query->found_posts;
-    $posts_per_page = $load_more_query->query_vars['posts_per_page'];
-    if ($total_posts > ($paged * $posts_per_page)) {
-      $response['hasMore'] = true; // On indique qu'il y a encore des photos disponibles.
-    }
-
-    wp_reset_postdata();
-
-    wp_send_json($response);
-
-    wp_die();
+  // Vérifier et filtrer le nonce (pour prévenir les attaques CSRF)
+  if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'loadMore_and_filters_nonce')) {
+    wp_send_json_error('Vérification de sécurité échouée');
   }
 
-  // Ajouter une action pour gérer la requête AJAX
-  add_action('wp_ajax_load_more_photos', 'load_more_photos'); // Pour les utilisateurs connectés
-  add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos'); // Pour les utilisateurs non connectés
+  $args = array(
+    'post_type' => 'photos',
+    'posts_per_page' => 8,
+    'orderby' => 'date',
+    'order' => $sort,
+    'paged' => $paged,
+  );
+
+  // Ajouter les filtres de catégorie et format si présents
+  if (!empty($category)) {
+    $args['tax_query'][] = array(
+      'taxonomy' => 'categorie', // Nom de la taxonomie personnalisée
+      'field' => 'slug', // Type de champ
+      'terms' => $category, // Valeur
+    );
+  }
+
+  if (!empty($format)) {
+    $args['tax_query'][] = array(
+      'taxonomy' => 'format',
+      'field' => 'slug',
+      'terms' => $format,
+    );
+  }
+
+  // On exécute la requête WP_Query
+  $filters_query = new WP_Query($args);
+
+  // On initialise la réponse
+  $response = array(
+    'html' => '', // Initialise le contenu HTML
+    'hasMore' => false, // Initialise l'indicateur de photos supplémentaires
+    'success' => false, // Initialise le statut de la requête
+  );
+
+  if ($filters_query->have_posts()) {
+    // On utilise la sortie tampon pour capturer le HTML généré par "get_template_part"
+    ob_start();
+    while ($filters_query->have_posts()) {
+      $filters_query->the_post();
+      get_template_part('templates_part/photo_block'); // On va chercher le template partiel.
+    }
+    $response['html'] = ob_get_clean(); // On récupère le HTML généré
+    $response['success'] = true; // La requête a réussi.
+  }
+
+  // On vérifie s'il y a davantage de photos disponibles.
+  $total_posts = $filters_query->found_posts;
+  $posts_per_page = $filters_query->query_vars['posts_per_page'];
+  if ($total_posts > ($paged * $posts_per_page)) {
+    $response['hasMore'] = true; // On indique qu'il y a encore des photos disponibles.
+  }
+
+  wp_reset_postdata();
+
+  wp_send_json($response);
+
+  wp_die();
+}
+
+// Ajouter une action pour gérer la requête AJAX
+add_action('wp_ajax_loadMore_and_filters', 'loadMore_and_filters_photos'); // Pour les utilisateurs connectés
+add_action('wp_ajax_nopriv_loadMore_and_filters', 'loadMore_and_filters_photos'); // Pour les utilisateurs non connectés

@@ -1,4 +1,7 @@
   <footer class="nmota__footer spacemono-regular">
+
+    <?php get_template_part( 'templates_part/lightbox' ); ?>
+
     <nav role="navigation" aria-label="<?php _e('footer', 'text-domain'); ?>" id="nmota__footer__navigation" class="nmota__footer__navigation">
       <?php wp_nav_menu( array(
         'theme_location' => 'footer-menu',

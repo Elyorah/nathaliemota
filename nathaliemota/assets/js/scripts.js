@@ -10,7 +10,7 @@ jQuery(document).ready(function () {
 
       // Remplissage automatique du champ "Réf. photo"
 
-      const referenceValue = referenceJS.referenceValue; // On accède à la valeur transmise grâce à "wp_localize_script" dans functions.php
+      const referenceValue = reference_JS.referenceValue; // On accède à la valeur transmise grâce à "wp_localize_script" dans functions.php
       const refPhotoInput = jQuery("#contact-photo-ref");
 
       if (refPhotoInput.length) {

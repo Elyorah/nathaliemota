@@ -54,8 +54,48 @@ get_header();
 /*'.'.'.'.'.'.'*/
 ?>
 
-<div class="nmota-filters-container">
-		<h2>VOICI LES FILTRES ! ! ! </h2>
+<div class="nmota-filters-container poppins-medium">
+
+	<!-- Filtre 1 CATEGORIES -->
+
+	<?php
+		$categories = get_terms(array(
+			'taxonomy' => 'categorie', // Nom de votre taxonomie
+			'hide_empty' => false, // Afficher les termes même s'ils sont vides
+	));
+		if ($categories && !is_wp_error($categories)) : ?>
+			<select id="filter-category">
+				<option value="" class="">Catégories</option>
+				<?php foreach($categories as $categorie) : ?>
+					<option value="<?php echo esc_attr($categorie->slug); ?>"><?php echo esc_html($categorie->name); ?></option>
+				<?php endforeach; ?>
+			</select>
+		<?php endif; ?>
+
+	<!-- Filtre 2 FORMATS -->
+
+	<?php
+		$formats = get_terms(array(
+			'taxonomy' => 'format', // Nom de votre taxonomie
+			'hide_empty' => false, // Afficher les termes même s'ils sont vides
+		));
+		if ($formats && !is_wp_error($formats)) : ?>
+			<select id="filter-format">
+				<option value="">Formats</option>
+				<?php foreach($formats as $format) : ?>
+					<option value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></option>
+				<?php endforeach; ?>
+			</select>
+		<?php endif; ?>
+	
+	<!-- Filtre 3 TRI PAR DATE -->
+	
+	<select id="filter-sort">
+		<option value="">Trier par</option>
+		<option value="DESC">Du plus récent au plus ancien</option>
+		<option value="ASC">Du plus ancien au plus récent</option>
+	</select>
+
 </div>
 
 <?php
@@ -63,6 +103,7 @@ get_header();
 /*   LISTE DE PHOTOS   */
 /*'.'.'.'.'.'.'.'.'.'.'*/
 ?>
+
 
 <div class="nmota-home-photo-list">
 
@@ -72,9 +113,9 @@ get_header();
 		'post_type' => 'photos',
 		'posts_per_page' => 8,
 		'orderby' => 'date',
-    'order' => 'DESC',
-    'paged' => 1,
-  );
+		'order' => 'DESC',
+		'paged' => 1,
+	);
 
 	// Affichage de la liste de photos
 	$photo_list_query = new WP_Query ($args);

@@ -104,6 +104,23 @@
 
   /* FILTRES */
 
+  .nmota-filters-container {
+    width: 80%;
+    margin: 80px auto 39px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 36px;
+
+    select {
+      width: 260px;
+      display: flex;
+    }
+
+    #filter-sort {
+      margin-left: auto; // Pousse l'élément vers la droite
+    }
+  }
+
   /* LISTE DE PHOTOS */
 
   .nmota-home-photo-list {
@@ -263,6 +280,26 @@
         flex-direction: row;
         gap: 20px;
         overflow: hidden;
+      }
+    }
+  }
+
+  /*******************************/
+  /* LIGHTBOX (TEMPLATE PARTIEL) */
+  /*******************************/
+
+  .nmota__lightbox {
+    &__wrapper {
+      &--content {
+        @media screen and (min-width: 1440px) {
+          .prev,
+          .next {
+            gap: 10px;
+            p {
+              display: flex;
+            }
+          }
+        }
       }
     }
   }
