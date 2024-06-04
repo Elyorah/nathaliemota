@@ -1,0 +1,185 @@
+/******************/
+/* ARCHIVE-PHOTOS */
+/******************/
+
+/* HERO */
+
+.nmota-hero {
+  width: 100%;
+  position: relative;
+
+  &__thumbnail {
+    width: 100%;
+    height: calc(100vw * 2 / 3);
+    max-height: 962px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__title {
+    color: $blanc; // Couleur de substitution au cas où le text-stroke n'est pas supporté par le navigateur
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.031em $blanc;
+    width: 79%;
+    font-size: 7.36vw;
+    line-height: 41px;
+    display: block;
+    margin: 0 auto;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+}
+
+/* FILTRES */
+
+.nmota-filters-container {
+  width: 270px;
+  margin: 28px auto;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  .filter-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    transition: border-color 0.3s ease, outline 0.3s ease;
+    appearance: none;
+
+    .filter-chevron {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      right: 5%;
+      transform: rotate(-90deg);
+
+      &::after {
+        content: "\276E";
+        font-size: 0.8em;
+      }
+
+      &.opened {
+        transform: rotate(90deg);
+      }
+    }
+
+    select {
+      background-color: $blanc;
+      width: 100%;
+      height: 100%;
+      padding: 11px 18px;
+      line-height: 18px;
+      border-radius: 8px;
+      border: 1.3px solid #b8bbc2;
+      transition: border-color 0.3s ease, outline 0.3s ease;
+      appearance: none;
+      text-transform: uppercase;
+
+      &:hover,
+      &:active,
+      &:focus-visible,
+      &:target {
+        outline: 1.3px solid #215aff !important;
+        border-color: #215aff;
+      }
+    }
+  }
+}
+
+/* LISTE DE PHOTOS */
+
+.nmota-home-photo-list {
+  width: 84.8vw;
+  margin: 0 auto 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+/* Bouton "Charger plus" */
+
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  #load-more {
+    width: 272px;
+    margin-bottom: 40px;
+  }
+}
+
+/* MEDIA QUERIES - DESKTOP */
+
+@media screen and (min-width: 1024px) {
+  /* HERO */
+
+  .nmota-hero {
+    &__thumbnail {
+      height: calc(100vw * (962 / 1440));
+    }
+
+    &__title {
+      line-height: 142px;
+
+      @media screen and (min-width: 1440px) {
+        width: 70%;
+        font-size: 6em;
+      }
+    }
+  }
+
+  /* FILTRES */
+
+  .nmota-filters-container {
+    width: 80%;
+    margin: 80px auto 39px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 36px;
+
+    .filter-wrapper {
+      width: 260px;
+
+      .filter-chevron::after {
+        font-size: 0.8em;
+      }
+    }
+
+    .filter-wrapper:last-child {
+      margin-left: auto; // Pousse l'élément vers la droite
+    }
+  }
+
+  /* LISTE DE PHOTOS */
+
+  .nmota-home-photo-list {
+    width: 80%;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: space-between;
+
+    .photo-block {
+      width: calc(
+        (100% - 20px) / 2
+      ); // Largeur totale du parent - le gap, divisés par 2 pour avoir seulement 2 images par ligne
+    }
+  }
+}

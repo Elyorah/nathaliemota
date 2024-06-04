@@ -1,0 +1,127 @@
+/*******************************/
+/* LIGHTBOX (TEMPLATE PARTIEL) */
+/*******************************/
+
+.nmota__lightbox {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+
+  .close {
+    color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    z-index: 99;
+
+    &:hover::after {
+      color: $blanc;
+    }
+
+    &::after {
+      content: "\2715";
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &__wrapper {
+    width: 100%;
+    max-height: 100%;
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $blanc;
+
+    &--content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      img {
+        height: auto;
+        max-width: 80%;
+        max-height: 100vh;
+        object-fit: contain;
+      }
+
+      .details {
+        width: 80%;
+        margin-top: 19px;
+        display: flex;
+        justify-content: space-between;
+        gap: 5%;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+
+      .prev,
+      .next {
+        width: 8%;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.6;
+        transition: 0.3s;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        img {
+          max-width: 30px;
+        }
+
+        p {
+          display: none;
+        }
+      }
+
+      .prev {
+        left: 0;
+        justify-content: flex-end;
+      }
+
+      .next {
+        right: 0;
+      }
+    }
+  }
+}
+
+.show {
+  display: initial;
+}
+
+/* MEDIA QUERIES - DESKTOP */
+
+@media screen and (min-width: 1440px) {
+  .nmota__lightbox__wrapper--content {
+    .prev,
+    .next {
+      gap: 10px;
+      p {
+        display: flex;
+      }
+    }
+  }
+}

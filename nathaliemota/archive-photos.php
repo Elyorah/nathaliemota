@@ -64,12 +64,15 @@ get_header();
 			'hide_empty' => false, // Afficher les termes même s'ils sont vides
 	));
 		if ($categories && !is_wp_error($categories)) : ?>
-			<select id="filter-category">
-				<option value="" class="">Catégories</option>
-				<?php foreach($categories as $categorie) : ?>
-					<option value="<?php echo esc_attr($categorie->slug); ?>"><?php echo esc_html($categorie->name); ?></option>
-				<?php endforeach; ?>
-			</select>
+			<div class="filter-wrapper">
+				<span class="filter-chevron"></span>
+				<select id="filter-category">
+					<option value="" class="">Catégories</option>
+					<?php foreach($categories as $categorie) : ?>
+						<option value="<?php echo esc_attr($categorie->slug); ?>"><?php echo esc_html($categorie->name); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
 		<?php endif; ?>
 
 	<!-- Filtre 2 FORMATS -->
@@ -80,21 +83,26 @@ get_header();
 			'hide_empty' => false, // Afficher les termes même s'ils sont vides
 		));
 		if ($formats && !is_wp_error($formats)) : ?>
-			<select id="filter-format">
-				<option value="">Formats</option>
-				<?php foreach($formats as $format) : ?>
-					<option value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></option>
-				<?php endforeach; ?>
-			</select>
+			<div class="filter-wrapper">
+				<span class="filter-chevron"></span>
+				<select id="filter-format">
+					<option value="">Formats</option>
+					<?php foreach($formats as $format) : ?>
+						<option value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
 		<?php endif; ?>
 	
 	<!-- Filtre 3 TRI PAR DATE -->
-	
-	<select id="filter-sort">
-		<option value="">Trier par</option>
-		<option value="DESC">Du plus récent au plus ancien</option>
-		<option value="ASC">Du plus ancien au plus récent</option>
-	</select>
+	<div class="filter-wrapper">
+		<span class="filter-chevron"></span>
+		<select id="filter-sort">
+			<option value="">Trier par</option>
+			<option value="DESC">Du plus récent au plus ancien</option>
+			<option value="ASC">Du plus ancien au plus récent</option>
+		</select>
+	</div>
 
 </div>
 

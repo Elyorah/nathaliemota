@@ -1,0 +1,247 @@
+/*****************/
+/* SINGLE-PHOTOS */
+/*****************/
+
+.nmota-photo-post {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid $noir;
+
+    &--main-picture {
+      width: 70.6vw;
+      height: auto;
+      margin: 20px 0 20px;
+
+      figure {
+        margin: 0;
+
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+
+    &-description {
+      width: 70.6vw;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      text-transform: uppercase;
+      overflow: hidden;
+
+      &--title {
+        margin: 0 0 15px;
+        font-size: 36px;
+
+        @media screen and (min-width: 768px) {
+          font-size: 46px;
+        }
+      }
+
+      &--list {
+        margin: 0;
+        padding: 0 0 41px;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        gap: 15px;
+      }
+    }
+  }
+
+  &__cta {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__main-container {
+      width: 70vw;
+      margin-bottom: 23px;
+      display: flex;
+      flex-direction: column;
+
+      &--intro {
+        margin: 24px 0 15px;
+        font-size: 14px;
+        line-height: 21px;
+      }
+    }
+
+    &__nav {
+      display: none;
+    }
+  }
+
+  &__suggestions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid $noir;
+
+    &--title {
+      margin: 24px 0 20px;
+      font-size: 18px;
+      line-height: 27px;
+      text-transform: uppercase;
+    }
+
+    &--photos {
+      width: 84.8vw;
+      margin: 0 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 21px;
+    }
+  }
+}
+
+/* MEDIA QUERIES - DESKTOP */
+
+@media screen and (min-width: 1024px) {
+  .nmota-photo-post {
+    width: 80%;
+    margin: 38px auto 109px;
+
+    &__content {
+      flex-direction: row-reverse;
+      align-items: normal;
+      border: none;
+      gap: 21px;
+
+      &--main-picture {
+        width: 50%;
+        margin: 0;
+      }
+
+      &-description {
+        width: 50%;
+        justify-content: flex-end;
+        border-bottom: 1px solid $noir;
+
+        &--title {
+          margin-bottom: 20px;
+          font-size: 55px;
+
+          @media screen and (min-width: 1440px) {
+            font-size: 66px;
+          }
+        }
+
+        &--list {
+          max-width: 420px;
+          padding-bottom: 37px;
+          gap: 20px;
+          overflow: auto;
+        }
+      }
+    }
+
+    &__cta {
+      justify-content: space-between;
+      gap: 21px;
+
+      &__main-container {
+        width: 50%;
+        height: 118px;
+        margin: 0;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        &--intro {
+          margin: 0;
+          font-size: 14px;
+        }
+
+        &--button {
+          width: 48%;
+        }
+      }
+
+      &__nav {
+        width: 81px;
+        margin: 8px 0 16px;
+        display: block;
+        position: relative;
+
+        &__thumbnails {
+          & > a div {
+            display: none;
+            opacity: 0;
+
+            &.display-thumbnail {
+              display: block;
+              opacity: 1;
+            }
+
+            & img {
+              width: 81px;
+            }
+          }
+        }
+
+        &__arrows {
+          width: 100%;
+          height: 21px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: absolute;
+          top: 88%;
+
+          & a {
+            width: 32%;
+            height: 15px;
+            display: flex;
+            content: "";
+            background-repeat: no-repeat;
+            background-size: contain;
+          }
+
+          &--prev {
+            background-image: url("../nathaliemota/assets/images/prev-arrow.svg");
+
+            &:hover {
+              background-image: url("../nathaliemota/assets/images/prev-arrow-hover.svg");
+            }
+          }
+          &--next {
+            background-image: url("../nathaliemota/assets/images/next-arrow.svg");
+
+            &:hover {
+              background-image: url("../nathaliemota/assets/images/next-arrow-hover.svg");
+            }
+          }
+        }
+      }
+    }
+
+    &__suggestions {
+      align-items: flex-start;
+
+      &--title {
+        margin: 77px 0 52px;
+      }
+
+      &--photos {
+        width: 100%;
+        margin: 0;
+        flex-direction: row;
+        gap: 20px;
+        overflow: hidden;
+      }
+    }
+  }
+}

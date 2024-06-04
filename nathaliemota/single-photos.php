@@ -24,8 +24,6 @@
     /////////////
 ?>
 
-
-
     <article class="nmota-photo-post">
 
       <div class="nmota-photo-post__content">

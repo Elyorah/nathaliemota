@@ -1,15 +1,24 @@
 <?php
 
-// Chargement du CSS personnalisé
+/****************************************/
+/* CHARGEMENTS DES SCRIPTS JS ET DU CSS */
+/****************************************/
+
 
 function theme_enqueue_styles() {
+
+// Chargement du CSS personnalisé
   wp_enqueue_style( 'theme-style', get_stylesheet_directory_uri() . '/style.css' );
 
-  // Chargement des scripts JS
+// Chargement des scripts JS
 
-  wp_enqueue_script('jquery'); //Charger jQuery en premier
+  // Charger jQuery en premier
+  wp_enqueue_script('jquery');
 
+  // Burger-menu
   wp_enqueue_script('burger-menu-script', get_stylesheet_directory_uri() . '/assets/js/burger-menu-script.js', array(), '1.0', true);
+
+  // Modale de contact
   wp_enqueue_script('scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array('jquery'), '1.0', true);
 
     $reference = get_field('reference'); // Récupération du champ "Référence" depuis ACF
@@ -19,26 +28,47 @@ function theme_enqueue_styles() {
       'referenceValue' => $reference
     );
 
-    // Transmettre les données à votre script JavaScript
+    // Transmission des données à JavaScript
     wp_localize_script('scripts', 'reference_JS', $reference_value);
 
+  // Script pour les miniatures de la page "single-photos"
   wp_enqueue_script('display-thumbnails', get_stylesheet_directory_uri() . '/assets/js/display-thumbnails.js', array('jquery'), '1.0', true);
 
-  // Filtres en menus personnalisés
+  // Lightbox
   wp_enqueue_script('lightbox', get_stylesheet_directory_uri() . '/assets/js/lightbox.js', array(), '1.0', true);
+
+  // Animation du chevron des filtres
+  wp_enqueue_script('filters-chevron', get_stylesheet_directory_uri() . '/assets/js/filters-chevron.js', array(), '1.0', true);
+
 
   // Ajax pour les filtres de tri des Photos et le bouton "charger plus" pour la pagination
   wp_enqueue_script('load-more_and_filters_ajax', get_stylesheet_directory_uri() . '/assets/js/load-more_and_filters_ajax.js', array('jquery'), '1.0', true);
 
+    // On récupère l'URL qui traite la requête AJAX, et on ajoute un jeton de sécurité "nonce"
     wp_localize_script('load-more_and_filters_ajax', 'loadMore_and_filters_JS', array('ajax_url' => admin_url('admin-ajax.php'),'loadMore_and_filters_nonce' => wp_create_nonce('loadMore_and_filters_nonce')));
 }
+
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
+
+
+/**********/
+/* GLOBAL */
+/**********/
+
 
 // Ajouter automatiquement le titre du site dans l'en-tête du site
 add_theme_support( 'title-tag' );
 
 // Ajouter la prise en charge des images mises en avant
 add_theme_support( 'post-thumbnails' );
+
+// Taille d'image personnalisée
+add_image_size('nav-thumbnail', 81, 71, true);
+
+/****************************************/
+/* MENUS DE NAVIGATION HEADER ET FOOTER */
+/****************************************/
+
 
 // Enregistrement des Menus de Navigation
 
@@ -48,17 +78,11 @@ function register_nmota_menus() {
 }
 add_action( 'after_setup_theme', 'register_nmota_menus' );
 
-// Ajout de la mention "Tous droits réservés" en hook du menu footer
 
-function paragraphe_copyright ( $items, $args ) {
-	if ( isset( $args->theme_location ) && $args->theme_location === 'footer-menu' ) { //On vérifie qu'on est dans le menu footer
-    $items .= '<li><p>Tous droits réservés</p></li>';
-  }
+/*********/
+/* HOOKS */
+/*********/
 
-	return $items;
-}
-
-add_filter( 'wp_nav_menu_items', 'paragraphe_copyright', 11, 2 );
 
 // Ajout de la modale de contact en tant que hook du menu header
 
@@ -78,9 +102,23 @@ function modale_contact ( $items, $args ) {
 
 add_filter( 'wp_nav_menu_items', 'modale_contact', 10, 2 );
 
-/////////////////////////////////////////
-// Tri des Photos de la page d'accueil //
-/////////////////////////////////////////
+// Ajout de la mention "Tous droits réservés" en hook du menu footer
+
+function paragraphe_copyright ( $items, $args ) {
+	if ( isset( $args->theme_location ) && $args->theme_location === 'footer-menu' ) { //On vérifie qu'on est dans le menu footer
+    $items .= '<li><p>Tous droits réservés</p></li>';
+  }
+
+	return $items;
+}
+
+add_filter( 'wp_nav_menu_items', 'paragraphe_copyright', 11, 2 );
+
+
+/***************************************/
+/* Tri des Photos de la page d'accueil */
+/***************************************/
+
 
 function loadMore_and_filters_photos() {
   // Récupérer les paramètres de pagination et des filtres
